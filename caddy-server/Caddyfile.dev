@@ -1,0 +1,31 @@
+# Caddy configuration file
+{
+	debug
+}
+
+
+:{$PORT} {
+	root * /var/www/html
+
+	# header {
+    #     Access-Control-Allow-Origin *
+    #     Access-Control-Allow-Credentials true
+    #     Access-Control-Allow-Methods *
+    #     Access-Control-Allow-Headers *
+    #     defer
+    # }
+
+    encode gzip
+
+    handle /api* {
+		reverse_proxy {$CADDY_BACKEND_HOST}:{$CADDY_BACKEND_PORT}
+	}
+
+	# reverse_proxy /api/* {$CADDY_BACKEND_HOST}:{$CADDY_BACKEND_PORT}
+
+    handle {
+		root * /var/www/html
+		try_files {path} /index.html
+		file_server
+	}
+}

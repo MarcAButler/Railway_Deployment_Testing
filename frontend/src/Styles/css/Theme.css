@@ -1,0 +1,9 @@
+.test-button {
+  margin: 8px 0;
+  margin-bottom: 20px;
+  aspect-ratio: 1/1;
+  width: 4%;
+  height: 4%;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+}

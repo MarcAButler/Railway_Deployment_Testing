@@ -1,0 +1,25 @@
+# Caddy configuration file
+{
+	# server options
+	servers {
+		trusted_proxies static private_ranges # trust railway's proxy
+	}
+}
+
+# Uncomment for development
+# :{$VITE_FRONTEND_PORT} {
+# Uncomment for production
+:{$PORT} {
+
+	# health check for railway
+	respond /health 200
+
+	root * /var/www/html
+
+    encode gzip
+
+	root * /var/www/html
+	try_files {path} /index.html
+	file_server
+
+}

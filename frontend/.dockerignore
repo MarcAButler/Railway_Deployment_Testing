@@ -1,0 +1,16 @@
+.vscode
+.env
+tests
+__mocks__
+coverage
+dist
+.eslint.cjs
+node_modules
+*.md
+*.log
+**/node_modules/
+**/dist
+.git
+npm-debug.log
+.coverage
+.coverage.*

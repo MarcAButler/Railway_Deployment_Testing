@@ -1,0 +1,31 @@
+# Caddy configuration file
+{
+	# debug
+
+	# server options
+	servers {
+		# trust railway's proxy
+		trusted_proxies static private_ranges 
+	}
+}
+
+
+# Comment out for development
+# :{$CADDY_BACKEND_PORT} {
+:{$PORT} {
+
+	# # the handle_path directive will strip /api/ from the path before proxying
+	# # this is needed if your backend's api routes don't start with /api/
+	# # change paths as needed
+	handle /api/* {
+		# this strips the /api/ prefix from the uri sent to the proxy address
+		# proxy all requests for /api/* to the backend, configure this variable in the service settings
+		reverse_proxy {$BACKEND_HOST} 
+	}
+	
+	reverse_proxy {$FRONTEND_HOST} # proxy all requests for /* to the frontend, configure this variable in the service settings
+
+
+	# configure this variable in the service settings
+	# reverse_proxy {$BACKEND_HOST}
+}

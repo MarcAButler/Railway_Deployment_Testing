@@ -1,0 +1,40 @@
+# Build React Image
+FROM node:latest AS frontend
+
+WORKDIR /frontend
+
+# React / Yarn / Node stuff
+ARG VITE_SERVER_URL
+
+COPY ./frontend/package*.json ./frontend/yarn.lock ./
+
+RUN yarn && yarn install
+
+COPY ./frontend .
+
+RUN yarn build
+
+
+
+# Caddy Build Image
+FROM caddy:2.7.6-alpine
+
+ARG PORT
+ARG CADDY_BACKEND_HOST
+ARG CADDY_BACKEND_PORT
+
+# Copy Caddyfile
+COPY /caddy-server/Caddyfile /etc/caddy/Caddyfile
+
+# Copy the built application from the previous stage
+COPY --from=frontend /frontend/dist /srv
+COPY --from=frontend /frontend/dist /var/www/html
+
+RUN caddy fmt --overwrite /etc/caddy/Caddyfile
+
+# WORKDIR /var/www/html
+
+
+
+# WORKDIR /var/www/react
+

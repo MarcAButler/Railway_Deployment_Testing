@@ -1,0 +1,43 @@
+name: Railway_Deployment_Testing
+
+
+services:
+  frontend:
+    env_file:
+    # - ./frontend/.env
+    - ./.env.local
+    container_name: "frontend"
+    build:
+      context: "./frontend"
+      args:
+        VITE_FRONTEND_PORT: ${VITE_FRONTEND_PORT}
+        VITE_SERVER_URL: "${VITE_SERVER_URL}"
+        PORT: ${PORT}
+    ports:
+      - ${VITE_FRONTEND_PORT}:${VITE_FRONTEND_PORT}
+
+  caddy-server:
+    env_file:
+    - ./.env.local
+    build:
+      context: "./"
+      dockerfile: './caddy-server/Dockerfile'
+      args:
+        # PORT: ${PORT}
+        CADDY_BACKEND_PORT: ${CADDY_BACKEND_PORT}
+        FRONTEND_HOST: ${FRONTEND_HOST}
+        BACKEND_HOST: ${BACKEND_HOST}
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - backend
+      
+  backend:
+    env_file:
+    - ./.env.local
+    container_name: "backend"
+    build:
+      context: "./backend"
+    ports:
+      - ${PORT}:${PORT}

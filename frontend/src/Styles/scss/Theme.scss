@@ -1,0 +1,10 @@
+.test-button {
+    @include marginStyling();
+    
+    aspect-ratio: 1/1;
+    width: 4%;
+    height: 4%;
+    
+    border-radius: 8px;
+    background-color: $secondaryColor;
+}

@@ -19,5 +19,5 @@ COPY . .
 # For Development
 # CMD yarn nodemon index
 
-# For Production - Make sure to run yarn build first
+# For Production
 CMD node index

@@ -8,7 +8,8 @@ const port = process.env.PORT || 5000
 
 // [Database or MongoDB stuff]
 
-app.listen(port, "0.0.0.0", () =>
+// app.listen(port, "0.0.0.0", () =>
+app.listen(port, "::", () =>
 {
     console.log(`listening on port ${port}`)
 })
